@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html>
-<head>
+<html ng-app="ionicApp">
+  <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <title></title>
-
-    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Question List Directive</title>
+   <link href="lib/ionic/css/ionic.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -22,20 +21,40 @@
 
     <!-- your app's js -->
     <script src="js/app.js"></script>
-</head>
-<body>
-<ion-pane>
-<ion-header-bar class="bar-assertive">
-<h1 class="title">Question app</h1>
-</ion-header-bar>
-<ion-content>
-<div class="list">
-  <div collection-repeat="q in questions">
-    <h2>{{ q.title }}</h2>
-    <p>{{ q.description }}</p>
-  </div>
-</div>
-</ion-content>
-</ion-pane>
-</body>
+	<script src="js/controller.js"></script>
+    <link href="//code.ionicframework.com/nightly/css/ionic.css" rel="stylesheet">
+    <script src="//code.ionicframework.com/nightly/js/ionic.bundle.js"></script>
+  </head>
+
+  <body ng-controller="MyCtrl">
+    
+    <ion-header-bar class="bar-positive">
+      <div class="buttons">
+        <button class="button button-icon icon ion-ios-minus-outline"
+          ng-click="data.showDelete = !data.showDelete; data.showReorder = false"></button>
+      </div>
+      <h1 class="title">Question Delete/Question Click</h1>
+      <div class="buttons">
+        <button class="button" ng-click="data.showDelete = false; data.showReorder = !data.showReorder">
+            Reorder
+        </button>
+      </div>
+    </ion-header-bar>
+    <ion-content>
+      <!-- The list directive is great, but be sure to also checkout the collection repeat directive when scrolling through large lists --> 
+      <ion-list show-delete="data.showDelete" show-reorder="data.showReorder">
+	  
+		<ion-item ng-repeat="item in items" item="item" ng-click="showAlert(item)" class="item-remove-animate">Item {{ item.title }} 
+		
+			<ion-delete-button class="ion-minus-circled" ng-click="onItemDelete(item)"></ion-delete-button>
+			<ion-option-button class="button-assertive" ng-click="edit(item)">Edit</ion-option-button>
+			<ion-option-button class="button-calm" ng-click="share(item)">Share</ion-option-button>
+			<ion-reorder-button class="ion-navicon" on-reorder="moveItem(item, $fromIndex, $toIndex)"></ion-reorder-button>
+		  
+        </ion-item>
+		
+      </ion-list>
+    </ion-content>
+      
+  </body>
 </html>
